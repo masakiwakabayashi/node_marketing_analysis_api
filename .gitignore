@@ -29,3 +29,5 @@ coverage/
 
 # Optional: Ignore package-lock if not using lockfiles in VCS
 # package-lock.json
+
+/generated/prisma

@@ -1,8 +1,11 @@
 import express, { Request, Response } from "express";
 import { Client } from "pg";
+import { PrismaClient } from "@prisma/client";
 
 const app = express();
 const port = 4000;
+
+const prisma = new PrismaClient();
 
 // PostgreSQLクライアントの設定
 const dbClient = new Client({
@@ -25,6 +28,16 @@ dbClient
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
+});
+
+// Prisma経由でUser一覧を取得
+app.get("/users", async (req: Request, res: Response) => {
+  try {
+    const users = await prisma.user.findMany();
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch users" });
+  }
 });
 
 app.listen(port, () => {
