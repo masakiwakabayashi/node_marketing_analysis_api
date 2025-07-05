@@ -4,12 +4,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: app
+    container_name: node_marketing_analysis_api
     volumes:
       - /usr/src/node_modules
       - .:/usr/src/app
     command: npm run dev
     expose:
-      - 3000
+      - 4000
     ports:
-      - "3000:3000"
+      - "4000:4000"
