@@ -36,6 +36,11 @@ app.get("/users", async (req: Request, res: Response) => {
     const users = await prisma.user.findMany();
     res.json(users);
   } catch (error) {
+    console.error("=== /users ERROR ===");
+    console.error(error);
+    if (error instanceof Error) {
+      console.error(error.stack);
+    }
     res.status(500).json({ error: "Failed to fetch users" });
   }
 });
