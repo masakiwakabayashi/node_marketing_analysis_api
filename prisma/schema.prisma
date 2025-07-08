@@ -36,4 +36,27 @@ model Habit {
   frequency   Frequency
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
+  logs        HabitLog[]
+}
+
+model HabitLog {
+  id         Int      @id @default(autoincrement())
+  habit      Habit    @relation(fields: [habit_id], references: [id])
+  habit_id   Int
+  log_date   DateTime
+  year       Int
+  month      Int
+  day        Int
+  completed  Boolean
+  note       String?
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model CalendarDate {
+  date    DateTime @id
+  year    Int
+  month   Int
+  day     Int
+  weekday Int // 0:日曜 〜 6:土曜
 }
