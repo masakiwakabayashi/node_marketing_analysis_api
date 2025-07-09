@@ -19,6 +19,7 @@ model User {
   name  String
   email String @unique
   habits Habit[]
+  roadmapItems RoadmapItem[]
 }
 
 enum Frequency {
@@ -59,4 +60,23 @@ model CalendarDate {
   month   Int
   day     Int
   weekday Int // 0:日曜 〜 6:土曜
+}
+
+enum RoadmapItemStatus {
+  not_started
+  in_progress
+  done
+}
+
+model RoadmapItem {
+  id         Int        @id @default(autoincrement())
+  userId     Int
+  title      String
+  content    String
+  due_date   DateTime
+  status     RoadmapItemStatus
+  created_at DateTime   @default(now())
+  updated_at DateTime   @updatedAt
+
+  user       User       @relation(fields: [userId], references: [id])
 }
