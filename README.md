@@ -12,6 +12,9 @@ npx prisma migrate dev
 npx prisma studio
 ```
 
+```sh
+npx prisma db seed
+```
 
 
 
