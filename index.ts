@@ -45,6 +45,28 @@ app.get("/users", async (req: Request, res: Response) => {
   }
 });
 
+// 特定ユーザーのメモ一覧取得
+app.get("/users/:userId/memos", async (req: Request, res: Response) => {
+  const userId = Number(req.params.userId);
+  if (isNaN(userId)) {
+    return res.status(400).json({ error: "Invalid userId" });
+  }
+  try {
+    const memos = await prisma.memo.findMany({
+      where: { userId },
+      orderBy: { created_at: "desc" },
+    });
+    res.json(memos);
+  } catch (error) {
+    console.error("=== /users/:userId/memos ERROR ===");
+    console.error(error);
+    if (error instanceof Error) {
+      console.error(error.stack);
+    }
+    res.status(500).json({ error: "Failed to fetch memos" });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });
