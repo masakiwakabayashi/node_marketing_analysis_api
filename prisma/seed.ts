@@ -35,6 +35,17 @@ async function main() {
     habits.push(habit);
   }
 
+  // 追加: Memo作成（各ユーザーに1つずつ）
+  for (const user of createdUsers) {
+    await prisma.memo.create({
+      data: {
+        title: `${user.name}のメモ`,
+        content: `これは${user.name}のメモです。`,
+        userId: user.id,
+      },
+    });
+  }
+
   // 3. CalendarDate作成（直近3日分）
   const today = new Date();
   for (let i = 0; i < 3; i++) {

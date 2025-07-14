@@ -20,6 +20,18 @@ model User {
   email String @unique
   habits Habit[]
   roadmapItems RoadmapItem[]
+  memos Memo[]
+}
+
+model Memo {
+  id         Int      @id @default(autoincrement())
+  title      String
+  content    String
+  userId     Int
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  user       User     @relation(fields: [userId], references: [id])
 }
 
 enum Frequency {
